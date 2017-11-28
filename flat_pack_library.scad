@@ -8,34 +8,34 @@ module outsideCuts(length=100, finger=8, material=5, text=false, center=false) {
 
 
   //maximum possible divisions for this length
-  maxDiv = floor(length/finger);
+  max_divisions = floor(length/finger);
   //number of usable divisions that fall completely within the edge
   //for this implentation the number of divisions must be odd
-  uDiv = maxDiv%2==0 ? maxDiv-3 : maxDiv-2;
+  usable_divsions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
 
   // number of "female cuts"
-  numCuts = floor(uDiv/2);
+  num_cuts = floor(usable_divsions/2);
 
   //length of cut at either end
-  endCut = (length-uDiv*finger)/2;
+  end_cut_length = (length-usable_divsions*finger)/2;
 
-  padding = endCut + finger;
-  //echo("outsideCuts\nmaxDiv", maxDiv, "\nuDiv", uDiv, "\nnumCuts", numCuts, "\nendCut", endCut);
+  padding = end_cut_length + finger;
+  //echo("outsideCuts\nmax_divisions", max_divisions, "\nusable_divsions", usable_divsions, "\nnum_cuts", num_cuts, "\nend_cut_length", end_cut_length);
 
-  xTrans = center==false ? 0 : -(numCuts*2+1)*finger/2-endCut;
-  yTrans = center==false ? 0 : -material/2;
+  x_translation = center==false ? 0 : -(num_cuts*2+1)*finger/2-end_cut_length;
+  y_translation = center==false ? 0 : -material/2;
 
-  translate([xTrans, yTrans]) {
+  translate([x_translation, y_translation]) {
     // add the "endcut" for a standard width cut plus any residual
-    square([endCut, material]);
+    square([end_cut_length, material]);
     //create the standard fingers
-    for (i=[0:numCuts]) {
-      if(i < numCuts) {
+    for (i=[0:num_cuts]) {
+      if(i < num_cuts) {
         translate([i*finger*2+padding, -o/2]) //move the cuts slightly in y plane for overage
           square([finger, material+o]); //add a tiny amount to the material thickness
       } else { // the last cut needs to be an end cut
         translate([i*finger*2+padding, -o/2])
-          square([endCut, material+o]);
+          square([end_cut_length, material+o]);
       }
     }
   }
@@ -44,7 +44,7 @@ module outsideCuts(length=100, finger=8, material=5, text=false, center=false) {
 
 
   if (text) {
-    translate([length/2+xTrans, yTrans+material*2])
+    translate([length/2+x_translation, y_translation+material*2])
     text(text=debugText, size = length*.05, halign = "center", font = font);
     //echo(debugText);
   }
@@ -52,27 +52,27 @@ module outsideCuts(length=100, finger=8, material=5, text=false, center=false) {
 }
 
 
-module insideCuts(length = 100, finger = 8, material = 5, text = true, center = false) {
+module insideCuts(length=100, finger=8, material=5, text=true, center=false) {
   // overage to ensure that all cuts are completed
   o = 0.0001;
 
 
   //maximum possible divisions for this length
-  maxDiv = floor(length/finger);
+  max_divisions = floor(length/finger);
   //number of usable divisions that fall completely within the edge
   //for this implementation the number of divisions must be odd
-  uDiv = maxDiv%2==0 ? maxDiv-3 : maxDiv-2;
+  usable_divsions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
 
   // number of "female cuts"
-  numCuts = ceil(uDiv/2);
+  num_cuts = ceil(usable_divsions/2);
 
-  //echo("insideCuts\nmaxDiv", maxDiv, "\nuDiv", uDiv, "\nnumCuts", numCuts);
+  //echo("insideCuts\nmax_divisions", max_divisions, "\nusable_divsions", usable_divsions, "\nnum_cuts", num_cuts);
 
-  xTrans = center==false ? 0 : -uDiv*finger/2;
-  yTrans = center==false ? 0 : -material/2;
+  x_translation = center==false ? 0 : -usable_divsions*finger/2;
+  y_translation = center==false ? 0 : -material/2;
 
-  translate([xTrans, yTrans]) {
-    for (i=[0:numCuts-1]) {
+  translate([x_translation, y_translation]) {
+    for (i=[0:num_cuts-1]) {
       translate([i*finger*2, -o/2, 0]) //move the cuts slightly in y plane for complete cuts
         square([finger, material+o]); //add a small amount to ensure complete cuts
     }
@@ -81,7 +81,7 @@ module insideCuts(length = 100, finger = 8, material = 5, text = true, center = 
 
 
   if (text) {
-    translate([0, yTrans+material*2])
+    translate([0, y_translation+material*2])
       text(text=debugText, size = length*0.05, halign = "center", font = font);
     //echo(debugText);
   }
