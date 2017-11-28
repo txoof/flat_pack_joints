@@ -20,7 +20,6 @@ module outsideCuts(length=100, finger=8, material=5, text=false, center=false, f
   end_cut_length = (length-usable_divsions*finger)/2;
 
   padding = end_cut_length + finger;
-  //echo("outsideCuts\nmax_divisions", max_divisions, "\nusable_divsions", usable_divsions, "\nnum_cuts", num_cuts, "\nend_cut_length", end_cut_length);
 
   x_translation = center==false ? 0 : -(num_cuts*2+1)*finger/2-end_cut_length;
   y_translation = center==false ? 0 : -material/2;
@@ -46,7 +45,6 @@ module outsideCuts(length=100, finger=8, material=5, text=false, center=false, f
   if (text) {
     translate([length/2+x_translation, y_translation+material*2])
     text(text=debugText, size = length*.05, halign = "center", font = font);
-    //echo(debugText);
   }
 
 }
@@ -66,8 +64,6 @@ module insideCuts(length=100, finger=8, material=5, text=false, center=false, fo
   // number of "female cuts"
   num_cuts = ceil(usable_divsions/2);
 
-  //echo("insideCuts\nmax_divisions", max_divisions, "\nusable_divsions", usable_divsions, "\nnum_cuts", num_cuts);
-
   x_translation = center==false ? 0 : -usable_divsions*finger/2;
   y_translation = center==false ? 0 : -material/2;
 
@@ -83,9 +79,7 @@ module insideCuts(length=100, finger=8, material=5, text=false, center=false, fo
   if (text) {
     translate([0, y_translation+material*2])
       text(text=debugText, size = length*0.05, halign = "center", font = font);
-    //echo(debugText);
   }
 
 }
 
-outsideCuts(center=true, text=true);
