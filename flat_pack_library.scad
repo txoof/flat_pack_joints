@@ -21,6 +21,7 @@ module outsideCuts(length=100, finger=8, material=5, text=false, center=false, f
 
   padding = end_cut_length + finger;
 
+  //set position relative to origin
   x_translation = center==false ? 0 : -(num_cuts*2+1)*finger/2-end_cut_length;
   y_translation = center==false ? 0 : -material/2;
 
@@ -47,7 +48,7 @@ module outsideCuts(length=100, finger=8, material=5, text=false, center=false, f
     text(text=debugText, size = length*.05, halign = "center", font = font);
   }
 
-}
+} //end outsideCuts
 
 
 module insideCuts(length=100, finger=8, material=5, text=false, center=false, font="Liberation Sans") {
@@ -64,6 +65,7 @@ module insideCuts(length=100, finger=8, material=5, text=false, center=false, fo
   // number of "female cuts"
   num_cuts = ceil(usable_divsions/2);
 
+  //set position relative to origin
   x_translation = center==false ? 0 : -usable_divsions*finger/2;
   y_translation = center==false ? 0 : -material/2;
 
@@ -81,5 +83,5 @@ module insideCuts(length=100, finger=8, material=5, text=false, center=false, fo
       text(text=debugText, size = length*0.05, halign = "center", font = font);
   }
 
-}
+} //end insideCuts
 
