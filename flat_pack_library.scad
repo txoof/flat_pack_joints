@@ -2,7 +2,7 @@
 
 
 
-module outsideCuts(length=100, finger=8, material=5, text=false, center=false) {
+module outsideCuts(length=100, finger=8, material=5, text=false, center=false, font="Liberation Sans") {
   // overage to ensure that all cuts are completed
   o = 0.0001;
 
@@ -52,7 +52,7 @@ module outsideCuts(length=100, finger=8, material=5, text=false, center=false) {
 }
 
 
-module insideCuts(length=100, finger=8, material=5, text=true, center=false) {
+module insideCuts(length=100, finger=8, material=5, text=false, center=false, font="Liberation Sans") {
   // overage to ensure that all cuts are completed
   o = 0.0001;
 
@@ -87,3 +87,5 @@ module insideCuts(length=100, finger=8, material=5, text=true, center=false) {
   }
 
 }
+
+outsideCuts(center=true, text=true);
