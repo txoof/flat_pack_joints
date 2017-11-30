@@ -167,4 +167,26 @@ module inside_cuts(length=6, finger=1, material=1, text=false, center=false, fon
 
 } //end inside_cuts
 
+module curved_finger(f_dim) {
+  $fn = 36;
 
+
+  module cutter() {
+    difference() {
+      square([f_dim[0], f_dim[0]/2], center=true);
+      translate([0, f_dim[0]/4])
+        circle(r=f_dim[0]/2, center=true);
+      }
+    }
+
+  difference() {
+    square(f_dim, center=true);
+    translate([0, -f_dim[1]/2+f_dim[0]/4])
+      cutter();
+  }
+}
+
+
+
+
+curved_finger(f_dim=[5, 5]);
