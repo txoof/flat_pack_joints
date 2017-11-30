@@ -190,7 +190,6 @@ module curved_finger(size) {
   $fn = 36;
 
   r = size[0] > size[1] ? size[1] : size[0]/2;
-  //x_trans = size[0] > size[1] ? size[0]/2 : size[0]/2;
   x_trans = size[0]/2;
   y_trans = -size[1]/2+r/2;
 
@@ -206,12 +205,10 @@ module curved_finger(size) {
     }
   }
  
-  //quarter();
 
   union() {
     square(size=size, center=true);  
     for (i = [-1, 1]) {
-      //translate([i*size[0]/2, -size[1]/2+size[1]/8])
       translate([(x_trans)*i, y_trans])
         quarter(polarity=i);
     }
