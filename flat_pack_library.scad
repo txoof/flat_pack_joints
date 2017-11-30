@@ -67,7 +67,7 @@ module outside_cuts(length=6, finger=1, material=1, text=false, center=false, fo
     // add the "endcut" for a standard width cut plus any residual
     square([end_cut_length, material]);
     //create the standard fingers
-    for (i=[0:num_cuts]) {
+    for (i = [0 : num_cuts]) {
       if(i < num_cuts) {
         translate([i*finger*2+padding, -overage/2]) //move the cuts slightly in y plane for overage
           square([finger, material+overage]); //add a tiny amount to the material thickness
@@ -110,7 +110,7 @@ module inside_cuts(length=6, finger=1, material=1, text=false, center=false, fon
   y_translation = center==false ? 0 : -material/2;
 
   translate([x_translation, y_translation]) {
-    for (i=[0:num_cuts-1]) {
+    for (i = [0 : num_cuts-1]) {
       translate([i*finger*2, -overage/2, 0]) //move the cuts slightly in y plane for complete cuts
         square([finger, material+overage]); //add a small amount to ensure complete cuts
     }
