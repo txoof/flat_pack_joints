@@ -2,12 +2,12 @@
 
 module test() {
   color("blue")
-    outsideCuts(center=true);
+    outside_cuts(center=true);
   color("red")
-    insideCuts(center=true);
+    inside_cuts(center=true);
 }
 
-module outsideCuts(length=6, finger=1, material=1, text=false, center=false, font="Liberation Sans") {
+module outside_cuts(length=6, finger=1, material=1, text=false, center=false, font="Liberation Sans") {
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
@@ -53,10 +53,10 @@ module outsideCuts(length=6, finger=1, material=1, text=false, center=false, fon
     text(text=debugText, size = length*.05, halign = "center", font = font);
   }
 
-} //end outsideCuts
+} //end outside_cuts
 
 
-module insideCuts(length=6, finger=1, material=1, text=false, center=false, font="Liberation Sans") {
+module inside_cuts(length=6, finger=1, material=1, text=false, center=false, font="Liberation Sans") {
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
@@ -88,5 +88,5 @@ module insideCuts(length=6, finger=1, material=1, text=false, center=false, font
       text(text=debugText, size = length*0.05, halign = "center", font = font);
   }
 
-} //end insideCuts
+} //end inside_cuts
 
