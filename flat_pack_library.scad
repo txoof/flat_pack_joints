@@ -189,24 +189,30 @@ module curved_fingerX(size) {
 module curved_finger(size) {
   $fn = 36;
 
-  r = size[0] > size[1] ? size[1]/2 : size[0]/2;
+  r = size[0] > size[1] ? size[1] : size[0]/2;
+  //x_trans = size[0] > size[1] ? size[0]/2 : size[0]/2;
+  x_trans = size[0]/2;
+  y_trans = -size[1]/2+r/2;
 
   echo(r);
 
   module quarter(polarity=-1) {
-    translate([polarity*size[0]/4, 0])
-    difference() {
-      square(size[0]/2, center = true);
-      translate([size[0]/4*polarity, size[0]/4])
-        circle(r=size[0]/2);
+    translate([polarity*r/2, 0]) {
+      difference() {
+        square(r, center = true);
+        translate([polarity*r/2, r/2])
+          circle(r=r);
+      }
     }
   }
-  
+ 
+  //quarter();
+
   union() {
     square(size=size, center=true);  
     for (i = [-1, 1]) {
       //translate([i*size[0]/2, -size[1]/2+size[1]/8])
-      translate([i*size[0]/2, -size[1]/2+size[0]/4])
+      translate([(x_trans)*i, y_trans])
         quarter(polarity=i);
     }
 
@@ -216,4 +222,4 @@ module curved_finger(size) {
 }
 
 
-curved_finger(size=[30, 10]);
+curved_finger(size=[5, 2]);
