@@ -2,24 +2,41 @@
 
 module test() {
   color("blue")
-    outside_cuts_debug(center=true);
+    outside_cuts_debug(length=10, center=true);
+    //outside_cuts(length=10,center = true);
   color("red")
-    inside_cuts(center=true);
+    //inside_cuts(length=10,center=true);
+    inside_cuts_debug(length=10, center=true);
 }
 
 test();
 
+module inside_cuts_debug(length=6, finger=1, material=1, center=false, font="Liberation Sans") {  
+
+  x_translation = center==false ? length/2 : 0;
+  y_translation = center==false ? material*1.5 : material; 
+
+  inside_cuts(length=length, finger=finger, material=material, center=center);
+
+  debugText = finger>=length/3 ? "ERR: finger>1/3 length" : "inside cuts";
+
+  translate([x_translation, y_translation,  0])
+  text(text=debugText, size = length*.1, halign = "center", font = font);
+
+
+}
+
 module outside_cuts_debug(length=6, finger=1, material=1, center=false, font="Liberation Sans") {  
 
-  x_translation = center==false ? 0 : 0;
-  y_translation = center==false ? 0 : 0;
+  x_translation = center==false ? length/2 : 0;
+  y_translation = center==false ? material*1.5 : material; 
 
   outside_cuts(length=length, finger=finger, material=material, center=center);
 
-  debugText = finger>=length/3 ? "ERR: finger>1/3 length" : "outsideCut";
+  debugText = finger>=length/3 ? "ERR: finger>1/3 length" : "outside cuts";
 
-  translate([0, material,  0])
-  text(text=debugText, size = length*.05, halign = "center", font = font);
+  translate([x_translation, y_translation,  0])
+  text(text=debugText, size = length*.1, halign = "center", font = font);
 
 
 }
