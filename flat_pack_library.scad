@@ -88,7 +88,7 @@ edge
     *center* (boolean)         center the set of fingers with respect to origin
 */
 
-module outside_cuts(length=6, finger=1, material=1, text=false, center=false, font="Liberation Sans") {
+module outside_cuts(length=6, finger=1, material=1, text=false, center=false) {
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
@@ -140,7 +140,7 @@ edge
     *center* (boolean)         center the set of fingers with respect to origin
 */
 
-module inside_cuts(length=6, finger=1, material=1, text=false, center=false, font="Liberation Sans") {
+module inside_cuts(length=6, finger=1, material=1, text=false, center=false) {
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
