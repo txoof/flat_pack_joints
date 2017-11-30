@@ -9,8 +9,6 @@ module test() {
     inside_cuts_debug(length=10, center=true);
 }
 
-test();
-
 module inside_cuts_debug(length=6, finger=1, material=1, center=false, font="Liberation Sans") {  
 
   x_translation = center==false ? length/2 : 0;
