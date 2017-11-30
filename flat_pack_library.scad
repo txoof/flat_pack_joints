@@ -78,16 +78,6 @@ module outside_cuts(length=6, finger=1, material=1, text=false, center=false, fo
     }
   }
 
-/*
-  debugText = finger>=length/3 ? "ERR: finger>1/3 length" : "outsideCut";
-
-
-  if (text) {
-    translate([length/2+x_translation, y_translation+material*2])
-    text(text=debugText, size = length*.05, halign = "center", font = font);
-  }
-*/
-
 } //end outside_cuts
 
 
@@ -114,13 +104,6 @@ module inside_cuts(length=6, finger=1, material=1, text=false, center=false, fon
       translate([i*finger*2, -overage/2, 0]) //move the cuts slightly in y plane for complete cuts
         square([finger, material+overage]); //add a small amount to ensure complete cuts
     }
-  }
-  debugText = finger>=length/3 ? "ERR: finger>1/3 length" : "insideCut";
-
-
-  if (text) {
-    translate([0, y_translation+material*2])
-      text(text=debugText, size = length*0.05, halign = "center", font = font);
   }
 
 } //end inside_cuts
