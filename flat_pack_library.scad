@@ -1,5 +1,9 @@
 //openscad flat-pack joint library
 
+
+
+
+
 module test() {
   color("blue")
     outside_cuts_debug(length=10, center=true);
@@ -8,6 +12,17 @@ module test() {
     //inside_cuts(length=10,center=true);
     inside_cuts_debug(length=10, center=true);
 }
+
+
+/*
+##module: inside_cuts
+create a set of cuts that falls entirely inside the edge
+  ###parameters:
+    *length* (real)         length of edge 
+    *finger* (real)         length of each individual finger
+    *material* (real)       thickness of material - sets cut depth
+    *center* (boolean)         center the set of fingers with respect to origin
+*/
 
 module inside_cuts_debug(length=6, finger=1, material=1, center=false, font="Liberation Sans") {  
 
@@ -22,7 +37,18 @@ module inside_cuts_debug(length=6, finger=1, material=1, center=false, font="Lib
   text(text=debugText, size = length*.1, halign = "center", font = font);
 
 
-}
+} // end inside debug
+
+/*
+##module: outside_cuts
+Create a set of finger-joint cuts that result in two larger cuts taken at the outside
+edge
+  ###parameters:
+    *length* (real)         length of edge
+    *finger* (real)         length of each individual finger
+    *material* (real)       thickness of material - sets cut depth
+    *center* (boolean)         center the set of fingers with respect to origin
+*/
 
 module outside_cuts_debug(length=6, finger=1, material=1, center=false, font="Liberation Sans") {  
 
@@ -37,7 +63,7 @@ module outside_cuts_debug(length=6, finger=1, material=1, center=false, font="Li
   text(text=debugText, size = length*.1, halign = "center", font = font);
 
 
-}
+} // end outside debug
 
 
 module outside_cuts(length=6, finger=1, material=1, text=false, center=false, font="Liberation Sans") {
@@ -107,4 +133,5 @@ module inside_cuts(length=6, finger=1, material=1, text=false, center=false, fon
   }
 
 } //end inside_cuts
+
 
