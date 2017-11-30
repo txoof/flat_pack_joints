@@ -4,7 +4,7 @@
 
 module outsideCuts(length=100, finger=8, material=5, text=false, center=false, font="Liberation Sans") {
   // overage to ensure that all cuts are completed
-  o = 0.0001;
+  overage = 0.0001;
 
 
   //maximum possible divisions for this length
@@ -31,8 +31,8 @@ module outsideCuts(length=100, finger=8, material=5, text=false, center=false, f
     //create the standard fingers
     for (i=[0:num_cuts]) {
       if(i < num_cuts) {
-        translate([i*finger*2+padding, -o/2]) //move the cuts slightly in y plane for overage
-          square([finger, material+o]); //add a tiny amount to the material thickness
+        translate([i*finger*2+padding, -overage/2]) //move the cuts slightly in y plane for overage
+          square([finger, material+overage]); //add a tiny amount to the material thickness
       } else { // the last cut needs to be an end cut
         translate([i*finger*2+padding, -o/2])
           square([end_cut_length, material+o]);
@@ -53,7 +53,7 @@ module outsideCuts(length=100, finger=8, material=5, text=false, center=false, f
 
 module insideCuts(length=100, finger=8, material=5, text=false, center=false, font="Liberation Sans") {
   // overage to ensure that all cuts are completed
-  o = 0.0001;
+  overage = 0.0001;
 
 
   //maximum possible divisions for this length
@@ -71,8 +71,8 @@ module insideCuts(length=100, finger=8, material=5, text=false, center=false, fo
 
   translate([x_translation, y_translation]) {
     for (i=[0:num_cuts-1]) {
-      translate([i*finger*2, -o/2, 0]) //move the cuts slightly in y plane for complete cuts
-        square([finger, material+o]); //add a small amount to ensure complete cuts
+      translate([i*finger*2, -overage/2, 0]) //move the cuts slightly in y plane for complete cuts
+        square([finger, material+overage]); //add a small amount to ensure complete cuts
     }
   }
   debugText = finger>=length/3 ? "ERR: finger>1/3 length" : "insideCut";
