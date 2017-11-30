@@ -167,26 +167,53 @@ module inside_cuts(length=6, finger=1, material=1, text=false, center=false, fon
 
 } //end inside_cuts
 
-module curved_finger(f_dim) {
+module curved_fingerX(size) {
   $fn = 36;
 
 
   module cutter() {
     difference() {
-      square([f_dim[0], f_dim[0]/2], center=true);
-      translate([0, f_dim[0]/4])
-        circle(r=f_dim[0]/2, center=true);
+      square([size[0], size[0]/2], center=true);
+      translate([0, size[0]/4])
+        circle(r=size[0]/2, center=true);
       }
     }
 
   difference() {
-    square(f_dim, center=true);
-    translate([0, -f_dim[1]/2+f_dim[0]/4])
+    square(size, center=true);
+    translate([0, -size[1]/2+size[0]/4])
       cutter();
   }
 }
 
+module curved_finger(size) {
+  $fn = 36;
+
+  r = size[0] > size[1] ? size[1]/2 : size[0]/2;
+
+  echo(r);
+
+  module quarter(polarity=-1) {
+    translate([polarity*size[0]/4, 0])
+    difference() {
+      square(size[0]/2, center = true);
+      translate([size[0]/4*polarity, size[0]/4])
+        circle(r=size[0]/2);
+    }
+  }
+  
+  union() {
+    square(size=size, center=true);  
+    for (i = [-1, 1]) {
+      //translate([i*size[0]/2, -size[1]/2+size[1]/8])
+      translate([i*size[0]/2, -size[1]/2+size[0]/4])
+        quarter(polarity=i);
+    }
+
+  }
 
 
+}
 
-curved_finger(f_dim=[5, 5]);
+
+curved_finger(size=[30, 10]);
