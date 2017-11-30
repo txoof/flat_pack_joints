@@ -167,13 +167,17 @@ module inside_cuts(length=6, finger=1, material=1, text=false, center=false, fon
 
 } //end inside_cuts
 
-module curved_finger(size) {
-  $fn = 36;
+module curved_finger(size, quality=24) {
+  //curve quality
+  $fn = quality;
 
+  //radius - use the X dimension if the Y dimension is larger
   r = size[0] > size[1] ? size[1] : size[0]/2;
   x_trans = size[0]/2;
   y_trans = -size[1]/2+r/2;
 
+  //generate a quarater of a square differenced with a circle
+  //polarity  [-1, 1]   left or right of origin 
   module quarter(polarity=-1) {
     translate([polarity*r/2, 0]) {
       difference() {
@@ -184,6 +188,7 @@ module curved_finger(size) {
     }
   }
 
+  //add quarter square to finger
   union() {
     square(size=size, center=true);  
     for (i = [-1, 1]) {
@@ -191,7 +196,6 @@ module curved_finger(size) {
         quarter(polarity=i);
     }
   }
-
 
 }
 
