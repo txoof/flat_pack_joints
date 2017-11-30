@@ -167,33 +167,12 @@ module inside_cuts(length=6, finger=1, material=1, text=false, center=false, fon
 
 } //end inside_cuts
 
-module curved_fingerX(size) {
-  $fn = 36;
-
-
-  module cutter() {
-    difference() {
-      square([size[0], size[0]/2], center=true);
-      translate([0, size[0]/4])
-        circle(r=size[0]/2, center=true);
-      }
-    }
-
-  difference() {
-    square(size, center=true);
-    translate([0, -size[1]/2+size[0]/4])
-      cutter();
-  }
-}
-
 module curved_finger(size) {
   $fn = 36;
 
   r = size[0] > size[1] ? size[1] : size[0]/2;
   x_trans = size[0]/2;
   y_trans = -size[1]/2+r/2;
-
-  echo(r);
 
   module quarter(polarity=-1) {
     translate([polarity*r/2, 0]) {
@@ -204,7 +183,6 @@ module curved_finger(size) {
       }
     }
   }
- 
 
   union() {
     square(size=size, center=true);  
@@ -212,7 +190,6 @@ module curved_finger(size) {
       translate([(x_trans)*i, y_trans])
         quarter(polarity=i);
     }
-
   }
 
 
