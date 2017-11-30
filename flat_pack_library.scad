@@ -1,9 +1,5 @@
 //openscad flat-pack joint library
 
-
-
-
-
 module test() {
   color("blue")
     outside_cuts_debug(length=10, center=true);
@@ -24,6 +20,20 @@ create a set of cuts that falls entirely inside the edge
     *center* (boolean)         center the set of fingers with respect to origin
 */
 
+
+/*
+##module: intside_cuts_debug
+Create a set of finger-joint cuts that result in two larger cuts taken at the outside
+edge with debugging text
+  ###parameters:
+    *length*      (real)           length of edge
+    *finger*      (real)           length of each individual finger
+    *material*    (real)           thickness of material - sets cut depth
+    *center*      (boolean)        center the set of fingers with respect to origin
+    *font*        (string)         name of font 
+*/
+
+
 module inside_cuts_debug(length=6, finger=1, material=1, center=false, font="Liberation Sans") {  
 
   x_translation = center==false ? length/2 : 0;
@@ -39,15 +49,17 @@ module inside_cuts_debug(length=6, finger=1, material=1, center=false, font="Lib
 
 } // end inside debug
 
+
 /*
-##module: outside_cuts
-Create a set of finger-joint cuts that result in two larger cuts taken at the outside
-edge
+##module: outside_cuts_debug
+Create a set of finger-joint cuts that result in two larger cuts taken at the inside
+edge with debugging text
   ###parameters:
-    *length* (real)         length of edge
-    *finger* (real)         length of each individual finger
-    *material* (real)       thickness of material - sets cut depth
-    *center* (boolean)         center the set of fingers with respect to origin
+    *length*      (real)           length of edge
+    *finger*      (real)           length of each individual finger
+    *material*    (real)           thickness of material - sets cut depth
+    *center*      (boolean)        center the set of fingers with respect to origin
+    *font*        (string)         name of font 
 */
 
 module outside_cuts_debug(length=6, finger=1, material=1, center=false, font="Liberation Sans") {  
@@ -65,6 +77,16 @@ module outside_cuts_debug(length=6, finger=1, material=1, center=false, font="Li
 
 } // end outside debug
 
+/*
+##module: outside_cuts
+Create a set of finger-joint cuts that result in two larger cuts taken at the outside
+edge
+  ###parameters:
+    *length* (real)         length of edge
+    *finger* (real)         length of each individual finger
+    *material* (real)       thickness of material - sets cut depth
+    *center* (boolean)         center the set of fingers with respect to origin
+*/
 
 module outside_cuts(length=6, finger=1, material=1, text=false, center=false, font="Liberation Sans") {
   // overage to ensure that all cuts are completed
@@ -106,6 +128,17 @@ module outside_cuts(length=6, finger=1, material=1, text=false, center=false, fo
 
 } //end outside_cuts
 
+
+/*
+##module: inside_cuts
+Create a set of finger-joint cuts that result in two larger cuts taken at the inside
+edge
+  ###parameters:
+    *length* (real)         length of edge
+    *finger* (real)         length of each individual finger
+    *material* (real)       thickness of material - sets cut depth
+    *center* (boolean)         center the set of fingers with respect to origin
+*/
 
 module inside_cuts(length=6, finger=1, material=1, text=false, center=false, font="Liberation Sans") {
   // overage to ensure that all cuts are completed
