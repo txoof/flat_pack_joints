@@ -1,8 +1,14 @@
 //openscad flat-pack joint library
 
+module test() {
+  color("blue")
+    outsideCuts(center=true);
+  color("red")
+    insideCuts(center=true);
+}
+test();
 
-
-module outsideCuts(length=100, finger=8, material=5, text=false, center=false, font="Liberation Sans") {
+module outsideCuts(length=6, finger=1, material=1, text=false, center=false, font="Liberation Sans") {
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
@@ -34,8 +40,8 @@ module outsideCuts(length=100, finger=8, material=5, text=false, center=false, f
         translate([i*finger*2+padding, -overage/2]) //move the cuts slightly in y plane for overage
           square([finger, material+overage]); //add a tiny amount to the material thickness
       } else { // the last cut needs to be an end cut
-        translate([i*finger*2+padding, -o/2])
-          square([end_cut_length, material+o]);
+        translate([i*finger*2+padding, -overage/2])
+          square([end_cut_length, material+overage]);
       }
     }
   }
@@ -51,7 +57,7 @@ module outsideCuts(length=100, finger=8, material=5, text=false, center=false, f
 } //end outsideCuts
 
 
-module insideCuts(length=100, finger=8, material=5, text=false, center=false, font="Liberation Sans") {
+module insideCuts(length=6, finger=1, material=1, text=false, center=false, font="Liberation Sans") {
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
