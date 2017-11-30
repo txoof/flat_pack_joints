@@ -2,10 +2,28 @@
 
 module test() {
   color("blue")
-    outside_cuts(center=true);
+    outside_cuts_debug(center=true);
   color("red")
     inside_cuts(center=true);
 }
+
+test();
+
+module outside_cuts_debug(length=6, finger=1, material=1, center=false, font="Liberation Sans") {  
+
+  x_translation = center==false ? 0 : 0;
+  y_translation = center==false ? 0 : 0;
+
+  outside_cuts(length=length, finger=finger, material=material, center=center);
+
+  debugText = finger>=length/3 ? "ERR: finger>1/3 length" : "outsideCut";
+
+  translate([0, material,  0])
+  text(text=debugText, size = length*.05, halign = "center", font = font);
+
+
+}
+
 
 module outside_cuts(length=6, finger=1, material=1, text=false, center=false, font="Liberation Sans") {
   // overage to ensure that all cuts are completed
@@ -45,6 +63,7 @@ module outside_cuts(length=6, finger=1, material=1, text=false, center=false, fo
     }
   }
 
+/*
   debugText = finger>=length/3 ? "ERR: finger>1/3 length" : "outsideCut";
 
 
@@ -52,6 +71,7 @@ module outside_cuts(length=6, finger=1, material=1, text=false, center=false, fo
     translate([length/2+x_translation, y_translation+material*2])
     text(text=debugText, size = length*.05, halign = "center", font = font);
   }
+*/
 
 } //end outside_cuts
 
