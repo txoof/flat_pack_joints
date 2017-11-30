@@ -6,7 +6,6 @@ module test() {
   color("red")
     insideCuts(center=true);
 }
-test();
 
 module outsideCuts(length=6, finger=1, material=1, text=false, center=false, font="Liberation Sans") {
   // overage to ensure that all cuts are completed
