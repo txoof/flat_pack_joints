@@ -31,13 +31,13 @@ module outside_cuts(length=6, finger=1, material=1, text=false, center=false, fo
   max_divisions = floor(length/finger);
   //number of usable divisions that fall completely within the edge
   //for this implentation the number of divisions must be odd
-  usable_divsions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
+  usable_divisions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
 
   // number of "female cuts"
-  num_cuts = floor(usable_divsions/2);
+  num_cuts = floor(usable_divisions/2);
 
   //length of cut at either end
-  end_cut_length = (length-usable_divsions*finger)/2;
+  end_cut_length = (length-usable_divisions*finger)/2;
 
   padding = end_cut_length + finger;
 
@@ -83,13 +83,13 @@ module inside_cuts(length=6, finger=1, material=1, text=false, center=false, fon
   max_divisions = floor(length/finger);
   //number of usable divisions that fall completely within the edge
   //for this implementation the number of divisions must be odd
-  usable_divsions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
+  usable_divisions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
 
   // number of "female cuts"
-  num_cuts = ceil(usable_divsions/2);
+  num_cuts = ceil(usable_divisions/2);
 
   //set position relative to origin
-  x_translation = center==false ? 0 : -usable_divsions*finger/2;
+  x_translation = center==false ? 0 : -usable_divisions*finger/2;
   y_translation = center==false ? 0 : -material/2;
 
   translate([x_translation, y_translation]) {
