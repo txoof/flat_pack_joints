@@ -1,6 +1,6 @@
 //openscad flat-pack joint library
 
-module test() {
+module finger_testing() {
   color("blue")
     outside_cuts_debug(length=10, center=true);
     //outside_cuts(length=10,center = true);
