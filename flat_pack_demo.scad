@@ -1,4 +1,4 @@
-use <./flat_pack.scad>
+use <lib/flat_pack.scad>;
 
 module finger_testing(size, finger, material) {
   difference() {
