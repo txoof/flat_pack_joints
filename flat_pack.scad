@@ -11,10 +11,23 @@ module finger_testing() {
 //finger_testing();
 
 module curved_test(dim=[100, 50, 45]) {
-  difference() {
-    square([dim[0], dim[1]]);
-    outside_cuts(length=dim[0], finger=5, material=10, type = "curved");
-  
+  translate() {
+    //faceXY
+    difference() {
+      square([dim[0], dim[1]]);
+      outside_cuts(length=dim[0], finger=5, material=10, type = "curved");
+      translate([dim[0]/2, dim[1]/2])
+        text(text="faceXY", size=dim[0]*.1, halign="center"); 
+    }
+  }
+  //faceXZ
+  translate([0, -dim[1]]) {
+    difference() {
+      square(size=[dim[0], dim[1]]);
+      translate([dim[0]/2, dim[1]-5])
+        rotate([0, 0, 180])
+        inside_cuts(length=dim[0], finger=5, material=10, type="curved", center=true);
+    }
   }
 }
 
@@ -165,8 +178,13 @@ module inside_cuts(length=6, finger=1, material=1, text=false, center=false) {
   translate([x_translation, y_translation]) {
     for (i = [0 : num_cuts-1]) {
       translate([i*finger*2, -overage/2, 0]) //move the cuts slightly in y plane for complete cuts
-        square([finger, material+overage]); //add a small amount to ensure complete cuts
+        if (type == "curved") {
+          curved_finger(size=[finger, material+overage]);
+        } else {
+          square([finger, material+overage]); //add a small amount to ensure complete cuts
+        }
     }
+
   }
 
 } //end inside_cuts
