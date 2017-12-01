@@ -8,8 +8,19 @@ module finger_testing() {
     //inside_cuts(length=10,center=true);
     inside_cuts_debug(length=10, center=true);
 }
-
 //finger_testing();
+
+module curved_test(dim=[100, 50, 45]) {
+  difference() {
+    square([dim[0], dim[1]]);
+    outside_cuts(length=dim[0], finger=5, material=10, type = "curved");
+  
+  }
+}
+
+curved_test();
+
+
 
 /*
 ##module: outside_cuts
@@ -22,7 +33,7 @@ edge
     *center* (boolean)         center the set of fingers with respect to origin
 */
 
-module outside_cutsX(length=6, finger=1, material=1, text=false, center=false) {
+module outside_cuts(length=6, finger=1, material=1, text=false, center=false) {
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
@@ -61,16 +72,6 @@ module outside_cutsX(length=6, finger=1, material=1, text=false, center=false) {
   }
 
 } //end outside_cuts
-
-module curved_test(dim=[100, 50, 45]) {
-  difference() {
-    square([dim[0], dim[1]]);
-    outside_cuts(length=dim[0], finger=5, material=10, type = "curved");
-  
-  }
-}
-
-curved_test();
 
 module outside_cuts(length=6, finger=1, material=1, text=false, center=false,
                     type="square") {
