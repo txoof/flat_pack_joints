@@ -1,12 +1,18 @@
 //openscad flat-pack joint library
 
 module finger_testing() {
-  color("blue")
-    outside_cuts_debug(length=10, center=true);
-    //outside_cuts(length=10,center = true);
-  color("red")
-    //inside_cuts(length=10,center=true);
-    inside_cuts_debug(length=10, center=true);
+  difference() {
+    color("blue")
+      square([100, 40]);
+      outside_cuts(length=100, finger=5, material=10, center=false);
+  }
+  
+  translate([0, -50])
+  difference() {  
+    color("red")
+      square([100, 50]);
+      #inside_cuts(length=100, finger=5, material=10, center=false);
+  }
 }
 
 finger_testing();
