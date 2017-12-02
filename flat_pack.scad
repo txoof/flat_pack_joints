@@ -24,9 +24,9 @@ module curved_test(dim=[100, 50, 45]) {
   translate([0, -dim[1]]) {
     difference() {
       square(size=[dim[0], dim[1]]);
-      translate([0-2.5, dim[1]])
-      rotate([180, 0, 0])
-        #inside_cuts(length=dim[0], finger=5, material=10, type="cured", center=false);
+      //translate([dim[0]/2, dim[1]-5])
+      //  rotate([0, 0, 180])
+        #inside_cuts(length=dim[0], finger=5, material=10, type="curved", center=false);
     }
   }
 }
