@@ -46,7 +46,7 @@ edge
     *center* (boolean)         center the set of fingers with respect to origin
 */
 
-module outside_cuts(length=6, finger=1, material=1, text=false, center=false) {
+module outside_cutsX(length=6, finger=1, material=1, text=false, center=false) {
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
@@ -138,7 +138,7 @@ module outside_cuts(length=6, finger=1, material=1, text=false, center=false,
                 translate([0, 0])    
                 curved_finger(size=[finger, material+overage]);
               }
-          }            
+          }           
       } 
     }
   }
@@ -169,7 +169,7 @@ module inside_cuts(length=6, finger=1, material=1, text=false, center=false) {
   usable_divisions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
 
   // number of "female cuts"
-  num_cuts = type == "curved" ? ceil(usable_divisions/2)+2 : ceil(usable_divisions/2);
+  num_cuts = ceil(usable_divisions/2);
 
 
   //set position relative to origin
@@ -181,7 +181,7 @@ module inside_cuts(length=6, finger=1, material=1, text=false, center=false) {
       translate([i*finger*2, -overage/2, 0]) //move the cuts slightly in y plane for complete cuts
         //use the appropriate style
         if (type == "curved") {
-          #curved_finger(size=[finger, material+overage]);
+          curved_finger(size=[finger, material+overage]);
         } else {
           square([finger, material+overage]); //add a small amount to ensure complete cuts
         }
