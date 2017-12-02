@@ -1,6 +1,6 @@
 //openscad flat-pack joint library
 
-module test() {
+module finger_testing() {
   color("blue")
     outside_cuts_debug(length=10, center=true);
     //outside_cuts(length=10,center = true);
@@ -9,73 +9,7 @@ module test() {
     inside_cuts_debug(length=10, center=true);
 }
 
-
-/*
-##module: inside_cuts
-create a set of cuts that falls entirely inside the edge
-  ###parameters:
-    *length* (real)         length of edge 
-    *finger* (real)         length of each individual finger
-    *material* (real)       thickness of material - sets cut depth
-    *center* (boolean)         center the set of fingers with respect to origin
-*/
-
-
-/*
-##module: intside_cuts_debug
-Create a set of finger-joint cuts that result in two larger cuts taken at the outside
-edge with debugging text
-  ###parameters:
-    *length*      (real)           length of edge
-    *finger*      (real)           length of each individual finger
-    *material*    (real)           thickness of material - sets cut depth
-    *center*      (boolean)        center the set of fingers with respect to origin
-    *font*        (string)         name of font 
-*/
-
-
-module inside_cuts_debug(length=6, finger=1, material=1, center=false, font="Liberation Sans") {  
-
-  x_translation = center==false ? length/2 : 0;
-  y_translation = center==false ? material*1.5 : material; 
-
-  inside_cuts(length=length, finger=finger, material=material, center=center);
-
-  debugText = finger>=length/3 ? "ERR: finger>1/3 length" : "inside cuts";
-
-  translate([x_translation, y_translation,  0])
-  text(text=debugText, size = length*.1, halign = "center", font = font);
-
-
-} // end inside debug
-
-
-/*
-##module: outside_cuts_debug
-Create a set of finger-joint cuts that result in two larger cuts taken at the inside
-edge with debugging text
-  ###parameters:
-    *length*      (real)           length of edge
-    *finger*      (real)           length of each individual finger
-    *material*    (real)           thickness of material - sets cut depth
-    *center*      (boolean)        center the set of fingers with respect to origin
-    *font*        (string)         name of font 
-*/
-
-module outside_cuts_debug(length=6, finger=1, material=1, center=false, font="Liberation Sans") {  
-
-  x_translation = center==false ? length/2 : 0;
-  y_translation = center==false ? material*1.5 : material; 
-
-  outside_cuts(length=length, finger=finger, material=material, center=center);
-
-  debugText = finger>=length/3 ? "ERR: finger>1/3 length" : "outside cuts";
-
-  translate([x_translation, y_translation,  0])
-  text(text=debugText, size = length*.1, halign = "center", font = font);
-
-
-} // end outside debug
+finger_testing();
 
 /*
 ##module: outside_cuts
@@ -97,13 +31,13 @@ module outside_cuts(length=6, finger=1, material=1, text=false, center=false) {
   max_divisions = floor(length/finger);
   //number of usable divisions that fall completely within the edge
   //for this implentation the number of divisions must be odd
-  usable_divsions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
+  usable_divisions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
 
   // number of "female cuts"
-  num_cuts = floor(usable_divsions/2);
+  num_cuts = floor(usable_divisions/2);
 
   //length of cut at either end
-  end_cut_length = (length-usable_divsions*finger)/2;
+  end_cut_length = (length-usable_divisions*finger)/2;
 
   padding = end_cut_length + finger;
 
@@ -131,9 +65,9 @@ module outside_cuts(length=6, finger=1, material=1, text=false, center=false) {
 
 /*
 ##module: inside_cuts
-Create a set of finger-joint cuts that result in two larger cuts taken at the inside
-edge
-  ###parameters:
+Create a set of finger-joint cuts all of the same size  
+
+###parameters:
     *length* (real)         length of edge
     *finger* (real)         length of each individual finger
     *material* (real)       thickness of material - sets cut depth
@@ -149,13 +83,13 @@ module inside_cuts(length=6, finger=1, material=1, text=false, center=false) {
   max_divisions = floor(length/finger);
   //number of usable divisions that fall completely within the edge
   //for this implementation the number of divisions must be odd
-  usable_divsions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
+  usable_divisions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
 
   // number of "female cuts"
-  num_cuts = ceil(usable_divsions/2);
+  num_cuts = ceil(usable_divisions/2);
 
   //set position relative to origin
-  x_translation = center==false ? 0 : -usable_divsions*finger/2;
+  x_translation = center==false ? 0 : -usable_divisions*finger/2;
   y_translation = center==false ? 0 : -material/2;
 
   translate([x_translation, y_translation]) {
@@ -166,5 +100,60 @@ module inside_cuts(length=6, finger=1, material=1, text=false, center=false) {
   }
 
 } //end inside_cuts
+
+/*
+##module: intside_cuts_debug
+Create a set of finger-joint cuts all of the same size  
+  ###parameters:
+    *length*      (real)           length of edge
+    *finger*      (real)           length of each individual finger
+    *material*    (real)           thickness of material - sets cut depth
+    *center*      (boolean)        center the set of fingers with respect to origin
+    *font*        (string)         name of font 
+*/
+
+
+module inside_cuts_debug(length=6, finger=1, material=1, center=false, font="Liberation Sans") {  
+
+  x_translation = center==false ? length/2 : 0;
+  y_translation = center==false ? material*1.5 : material; 
+
+  inside_cuts(length=length, finger=finger, material=material, center=center);
+
+  debugText = finger>=length/3 ? "ERR: finger>1/3 length" : "inside cuts";
+
+  translate([x_translation, y_translation,  0])
+  text(text=debugText, size = length*.1, halign = "center", font = font);
+
+
+} // end inside debug
+
+
+/*
+##module: outside_cuts_debug
+Create a set of finger-joint cuts that result in two larger cuts taken at the i
+inside edge with debugging text
+  ###parameters:
+    *length*      (real)           length of edge
+    *finger*      (real)           length of each individual finger
+    *material*    (real)           thickness of material - sets cut depth
+    *center*      (boolean)        center the set of fingers with respect to origin
+    *font*        (string)         name of font 
+*/
+
+module outside_cuts_debug(length=6, finger=1, material=1, center=false, font="Liberation Sans") {  
+
+  x_translation = center==false ? length/2 : 0;
+  y_translation = center==false ? material*1.5 : material; 
+
+  outside_cuts(length=length, finger=finger, material=material, center=center);
+
+  debugText = finger>=length/3 ? "ERR: finger>1/3 length" : "outside cuts";
+
+  translate([x_translation, y_translation,  0])
+  text(text=debugText, size = length*.1, halign = "center", font = font);
+
+
+} // end outside debug
 
 
