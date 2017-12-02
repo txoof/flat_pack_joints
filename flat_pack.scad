@@ -74,7 +74,11 @@ module outside_cuts(length=6, finger=1, material=1, text=false, center=false) {
     for (i = [0 : num_cuts]) {
       if(i < num_cuts) {
         translate([i*finger*2+padding, -overage/2]) //move the cuts slightly in y plane for overage
-          square([finger, material+overage]); //add a tiny amount to the material thickness
+        if (type == "curved") {
+          curved_finger([finger, material+overage]); //add a tiny amount to the material thickness
+        } else {
+          square([finger, material+overage]);
+        }
       } else { // the last cut needs to be an end cut
         translate([i*finger*2+padding, -overage/2])
           square([end_cut_length, material+overage]);
