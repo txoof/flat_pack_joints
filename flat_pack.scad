@@ -7,11 +7,13 @@ module finger_testing() {
       outside_cuts(length=100, finger=5, material=10, center=false);
   }
   
-  translate([0, -50])
+  rotate([180, 0, 0])
+  translate([0, 0])
   difference() {  
     color("red")
       square([100, 50]);
-      #inside_cuts(length=100, finger=5, material=10, center=false);
+      translate([50, 5])
+      #inside_cuts(length=100, finger=5, material=10, center=true);
   }
 }
 
