@@ -17,7 +17,7 @@ module finger_testing() {
   }
 }
 
-finger_testing();
+//finger_testing();
 
 /*
 ##module: outside_cuts
