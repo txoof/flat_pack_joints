@@ -1,12 +1,20 @@
 //openscad flat-pack joint library
 
 module finger_testing() {
-  color("blue")
-    outside_cuts_debug(length=10, center=true);
-    //outside_cuts(length=10,center = true);
-  color("red")
-    //inside_cuts(length=10,center=true);
-    inside_cuts_debug(length=10, center=true);
+  difference() {
+    color("blue")
+      square([110, 40]);
+      #outside_cuts(length=110, finger=5, material=10, center=false);
+  }
+  
+  rotate([180, 0, 0])
+  translate([0, 0])
+  difference() {  
+    color("red")
+      square([110, 50]);
+      translate([55, 5])
+      #inside_cuts(length=110, finger=5, material=10, center=true);
+  }
 }
 //finger_testing();
 
@@ -15,7 +23,7 @@ module curved_test(dim=[100, 50, 45]) {
     //faceXY
     difference() {
       square([dim[0], dim[1]]);
-      #outside_cuts(length=dim[0], finger=5, material=10, type = "curved");
+      outside_cuts(length=dim[0], finger=5, material=10, type = "curved");
       translate([dim[0]/2, dim[1]/2])
         text(text="faceXY", size=dim[0]*.1, halign="center"); 
     }
@@ -68,25 +76,29 @@ module outside_cuts(length=6, finger=1, material=1, text=false, center=false) {
   y_translation = center==false ? 0 : -material/2;
 
 
-  //the first and last cuts are rather tacked on in a very inelegant way
-  //is there a better way to do this?
-  //This is mostly an issue because it adds extra maintinance for changes 
   translate([x_translation, y_translation]) {
-    // add the "endcut" for a standard width cut plus any residual
-    square([end_cut_length, material]);
-    //create the standard fingers
-    for (i = [0 : num_cuts]) {
-      if(i < num_cuts) {
-        translate([i*finger*2+padding, -overage/2]) //move the cuts slightly in y plane for overage
+  
+    // make both endcuts here
+    for (j = [0, 1]) {
+      translate([(length-end_cut_length)*j, -overage/2])
+        square([end_cut_length, material+overage]);
         if (type == "curved") {
-          curved_finger([finger, material+overage]); //add a tiny amount to the material thickness
+          //very inelegant solution here
+          translate([end_cut_length-finger+(length-2*end_cut_length+finger)*j, -overage/2])
+            curved_finger([finger, material+overage]);
+        }
+    }
+    
+
+    //make all the "normal" finger cuts here
+    for (i = [0 : num_cuts-1]) {
+      translate([i*finger*2+padding, -overage/2]) //move cuts slightly in y plane
+        if (type == "curved") {
+          curved_finger([finger, material+overage]);
         } else {
           square([finger, material+overage]);
         }
-      } else { // the last cut needs to be an end cut
-        translate([i*finger*2+padding, -overage/2])
-          square([end_cut_length, material+overage]);
-      }
+    
     }
   }
 
