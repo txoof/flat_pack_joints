@@ -3,17 +3,17 @@
 module finger_testing() {
   difference() {
     color("blue")
-      square([100, 40]);
-      outside_cuts(length=100, finger=5, material=10, center=false);
+      square([110, 40]);
+      #outside_cuts(length=110, finger=5, material=10, center=false);
   }
   
   rotate([180, 0, 0])
   translate([0, 0])
   difference() {  
     color("red")
-      square([100, 50]);
-      translate([50, 5])
-      #inside_cuts(length=100, finger=5, material=10, center=true);
+      square([110, 50]);
+      translate([55, 5])
+      #inside_cuts(length=110, finger=5, material=10, center=true);
   }
 }
 
@@ -54,17 +54,19 @@ module outside_cuts(length=6, finger=1, material=1, text=false, center=false) {
   y_translation = center==false ? 0 : -material/2;
 
   translate([x_translation, y_translation]) {
-    // add the "endcut" for a standard width cut plus any residual
-    square([end_cut_length, material]);
-    //create the standard fingers
-    for (i = [0 : num_cuts]) {
-      if(i < num_cuts) {
-        translate([i*finger*2+padding, -overage/2]) //move the cuts slightly in y plane for overage
-          square([finger, material+overage]); //add a tiny amount to the material thickness
-      } else { // the last cut needs to be an end cut
-        translate([i*finger*2+padding, -overage/2])
-          square([end_cut_length, material+overage]);
-      }
+  
+    // make both endcuts here
+    for (j = [0, 1]) {
+      translate([(length-end_cut_length)*j, -overage/2])
+        square([end_cut_length, material+overage]);
+    }
+    
+
+    //make all the "normal" finger cuts here
+    for (i = [0 : num_cuts-1]) {
+      translate([i*finger*2+padding, -overage/2]) //move cuts slightly in y plane
+        square([finger, material+overage]);
+    
     }
   }
 
