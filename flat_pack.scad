@@ -15,7 +15,7 @@ module curved_test(dim=[100, 50, 45]) {
     //faceXY
     difference() {
       square([dim[0], dim[1]]);
-      outside_cuts(length=dim[0], finger=5, material=10, type = "curved");
+      #outside_cuts(length=dim[0], finger=5, material=10, type = "curved");
       translate([dim[0]/2, dim[1]/2])
         text(text="faceXY", size=dim[0]*.1, halign="center"); 
     }
@@ -67,6 +67,10 @@ module outside_cuts(length=6, finger=1, material=1, text=false, center=false) {
   x_translation = center==false ? 0 : -(num_cuts*2+1)*finger/2-end_cut_length;
   y_translation = center==false ? 0 : -material/2;
 
+
+  //the first and last cuts are rather tacked on in a very inelegant way
+  //is there a better way to do this?
+  //This is mostly an issue because it adds extra maintinance for changes 
   translate([x_translation, y_translation]) {
     // add the "endcut" for a standard width cut plus any residual
     square([end_cut_length, material]);
