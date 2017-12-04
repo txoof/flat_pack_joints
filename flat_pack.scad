@@ -75,7 +75,7 @@ module inside_cuts(length=6, finger=1, material=1, center=false) {
   //for this implementation the number of divisions must be odd
   usable_divisions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
 
-  //add padding to align the teeth
+  //add padding to align the teeth with a like outside_cuts() call
   end_cut_length = (length-usable_divisions*finger)/2;
   padding = end_cut_length;
 
