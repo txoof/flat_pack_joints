@@ -11,7 +11,7 @@ edge
     *center* (boolean)         center the set of fingers with respect to origin
 */
 
-module outside_cuts(length=6, finger=1, material=1, text=false, center=false) {
+module outside_cuts(length=6, finger=1, material=1, center=false) {
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
@@ -65,7 +65,7 @@ Create a set of finger-joint cuts all of the same size
     *center* (boolean)         center the set of fingers with respect to origin
 */
 
-module inside_cuts(length=6, finger=1, material=1, text=false, center=false) {
+module inside_cuts(length=6, finger=1, material=1, center=false) {
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
