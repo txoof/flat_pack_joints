@@ -39,7 +39,8 @@ module curved_test(dim=[100, 50, 45]) {
   }
 }
 
-curved_test();
+//curved_test();
+
 
 /*
 ##module: outside_cuts
@@ -239,4 +240,92 @@ module outside_cuts_debug(length=6, finger=1, material=1, center=false, font="Li
 } // end outside debug
 
 
+module t_slot(diameter=false, length, material, help=false, tolerance=0.25,
+              node=0) {
+  //vector containing parameters for metric nut and bolt sizes
+  metric_fastener = [
+  ["name", "thread diameter", "hex head thickess", "hex head & nut size",
+  "socket head diameter", "socket head thickness", "socket tool size",
+  "nut thickness,", "pitch", "washer thickness", "washer diameter",
+  "button thickness", "hex head and nut diameter"] ,
+  // M0 - field descriptors place holder in array
+  ["M1 - UNDEFINED"], // M1
+  ["M2 Bolt, Nut & Washer", 2, 2, 4, 3.5, 2, 1.5, 1.6, 0.4, 0.3, 5.5, .90, 4.62], // M2
+  ["M3 Bolt, Nut & Washer", 3, 2, 5.5, 5.5, 3, 2.5, 2.4, 0.5, 0.5, 7, 1.04, 6.35], // M3
+  ["M4 Bolt, Nut & Washer", 4, 2.8, 7, 7, 4, 3, 3.2, 0.7, 0.8, 9, 1.3, 8.08], // M4
+  ["M5 Bolt, Nut & Washer", 5, 3.5, 8, 8.5, 5, 4, 4, 0.8, 0.9, 10, 2.75, 9.24],
+  ["M6 Bolt, Nut & Washer", 6, 4, 10, 10, 6, 5, 5, 1, 1.6, 12, 2.08, 11.55],
+  ["M7 - UNDEFINED"],
+  ["M8 Bolt, Nut & Washer", 8, 5.5, 13, 13, 8, 6, 6.5, 1.25, 2, 17, 2.6, 15.01],
+  ["M9 - UNDEFINED"],
+  ["M10 Bolt, Nut & Washer", 10, 7, 17, 16, 10, 8, 8, 1.5, 2, 21, 19.63]
+];
+  
+  nut_flats = diameter != false ? metric_fastener[diameter][3] + tolerance : 1;
+  nut_thickness = diameter != false ? metric_fastener[diameter][7] + tolerance : 1;
+
+
+  //display help if needed
+  if (help == true) {
+    list_types(metric_fastener, diameter);
+  }
+
+  //create the t slot
+  union() {
+    translate([length-material-nut_thickness*1.5, 0, 0])
+      //square([nut_thickness, nut_flats], center = true);
+      nut();
+    translate([0, -diameter/2, 0])
+      square([length-material, diameter]);
+  }
+
+  // draw a silouette fo a nut (across the flats) with nodes to prevent cracking
+  // in polycarbonate
+  module nut() {
+    $fn = 36;
+    union() {
+      square([nut_thickness, nut_flats], center = true);
+      if (node > 0) {
+        for (i = [-1, 1]) {
+          translate([-nut_thickness/2, nut_flats/2*i])
+            circle(r=node/2);
+        }
+      }
+    }
+  }
+
+  module list_types(array, item = false) {
+    // list available fastener types stored and index values for programming refference
+    descriptor = array[0];
+    // only display all of the information if no item is passed
+    if (!item) {
+      echo("**displays contents of descriptor array**");
+      echo("array_index[X] - X = value to be called for that fastener type.");
+      echo("     [Y] description: Z - Y = sub array index, Z = value stored");
+    }
+
+    //range = !item ? [1:len(array-1)] :
+
+    low = !item ? 1 : item;
+
+    high = !item ? len(array)-1 : item;
+
+    //for (i = [1:len(array)-1]) {
+    for (i = [low:high]) {
+      for (j = [ 0:len(array[i])-1 ] ) {
+	if (j == 0) {
+	  echo(str(descriptor[j], ": ", array[i][j]));
+	  echo(str("array_index[", i,"]"));
+	} else { // end if
+	  echo(str("     [", j, "] ", descriptor[j], ": ", array[i][j]));
+	} // end else
+      } // end for j
+      echo("===============================");
+
+    } // end for i
+  } // end list types
+
+} // end t_slot
+
+t_slot(help=true, diameter=3, length=10, material=3, node=0.7);
 //!curved_finger(size=[5, 2]);
