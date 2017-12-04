@@ -12,9 +12,10 @@ module finger_testing() {
   difference() {
     color("red")
       square([110, 50]);
-      translate([55, 5])
-      #inside_cuts(length=110, finger=5, material=10, center=true);
+      translate([0, 0])
+      #inside_cuts(length=110, finger=5, material=10, center=false);
   }
 }
+
 
 finger_testing();
