@@ -4,7 +4,7 @@ module finger_testing() {
   difference() {
     color("blue")
       square([110, 40]);
-      #outside_cuts(length=110, finger=5, material=10, center=false);
+      outside_cuts(length=110, finger=5, material=10, center=false);
   }
 
   rotate([180, 0, 0])
@@ -13,7 +13,7 @@ module finger_testing() {
     color("red")
       square([110, 50]);
       translate([0, 0])
-      #inside_cuts(length=110, finger=5, material=10, center=false);
+      inside_cuts(length=110, finger=5, material=10, center=false);
   }
 }
 
