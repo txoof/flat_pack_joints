@@ -69,18 +69,21 @@ module inside_cuts(length=6, finger=1, material=1, center=false) {
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
-
   //maximum possible divisions for this length
   max_divisions = floor(length/finger);
   //number of usable divisions that fall completely within the edge
   //for this implementation the number of divisions must be odd
   usable_divisions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
 
+  //add padding to align the teeth
+  end_cut_length = (length-usable_divisions*finger)/2;
+  padding = end_cut_length;
+
   // number of "female cuts"
   num_cuts = ceil(usable_divisions/2);
 
   //set position relative to origin
-  x_translation = center==false ? 0 : -usable_divisions*finger/2;
+  x_translation = center==false ? padding : -usable_divisions*finger/2;
   y_translation = center==false ? 0 : -material/2;
 
   translate([x_translation, y_translation]) {
