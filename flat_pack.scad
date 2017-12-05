@@ -2,13 +2,14 @@
 
 /*
 ##module: outside_cuts
-Create a set of finger-joint cuts that result in two larger cuts taken at the outside
-edge
-  ###parameters:
-    *length* (real)         length of edge
-    *finger* (real)         length of each individual finger
-    *material* (real)       thickness of material - sets cut depth
-    *center* (boolean)         center the set of fingers with respect to origin
+**Create a set of finger-joint cuts that result in two larger cuts taken at the outside edge**
+
+***parameters:***
+
+    length    (real)         length of edge
+    finger    (real)         length of each individual finger
+    material  (real)         thickness of material - sets cut depth
+    center    (boolean)      center the set of fingers with respect to origin
 */
 
 module outside_cuts(length=6, finger=1, material=1, center=false) {
@@ -19,7 +20,7 @@ module outside_cuts(length=6, finger=1, material=1, center=false) {
   //maximum possible divisions for this length
   max_divisions = floor(length/finger);
   //number of usable divisions that fall completely within the edge
-  //for this implentation the number of divisions must be odd
+  //for this implementation the number of divisions must be odd
   usable_divisions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
 
   // number of "female cuts"
@@ -50,13 +51,17 @@ module outside_cuts(length=6, finger=1, material=1, center=false) {
 
 
     //make all the "normal" finger cuts here
-    for (i = [0 : num_cuts-1]) {
-      translate([i*finger*2+padding, -overage/2]) //move cuts slightly in y plane
-        if (type == "curved") {
-          curved_finger([finger, material+overage]);
-        } else {
-          square([finger, material+overage]);
-        }
+    if(num_cuts > 0) {
+      for (i = [0 : num_cuts-1]) {
+        translate([i*finger*2+padding, -overage/2]) //move cuts slightly in y plane
+          if (type == "curved") {
+            curved_finger([finger, material+overage]);
+          } else {
+            square([finger, material+overage]);
+          }
+      }
+    } else {
+      echo("Error: finger size must be < 1/3 of length");
     }
   }
 
@@ -65,13 +70,14 @@ module outside_cuts(length=6, finger=1, material=1, center=false) {
 
 /*
 ##module: inside_cuts
-Create a set of finger-joint cuts all of the same size
+**Create a set of finger-joint cuts all of the same size**
 
-###parameters:
-    *length* (real)         length of edge
-    *finger* (real)         length of each individual finger
-    *material* (real)       thickness of material - sets cut depth
-    *center* (boolean)         center the set of fingers with respect to origin
+***parameters:***
+
+    length    (real)         length of edge
+    finger    (real)         length of each individual finger
+    material  (real)         thickness of material - sets cut depth
+    center    (boolean)      center the set of fingers with respect to origin
 */
 
 module inside_cuts(length=6, finger=1, material=1, center=false) {
@@ -84,7 +90,7 @@ module inside_cuts(length=6, finger=1, material=1, center=false) {
   //for this implementation the number of divisions must be odd
   usable_divisions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
 
-  //add padding to align the teeth
+  //add padding to align the teeth with a like outside_cuts() call
   end_cut_length = (length-usable_divisions*finger)/2;
   padding = end_cut_length;
 
@@ -96,16 +102,19 @@ module inside_cuts(length=6, finger=1, material=1, center=false) {
   y_translation = center==false ? 0 : -material/2;
 
   translate([x_translation, y_translation]) {
-    for (i = [0 : num_cuts-1]) {
-      translate([i*finger*2, -overage/2, 0]) //move the cuts slightly in y plane for complete cuts
-      if (type == "curved") {
-        curved_finger([finger, material+overage]);
-      } else {
-        square([finger, material+overage]); //add a small amount to ensure complete cuts
+    if (num_cuts > 0) {
+      for (i = [0 : num_cuts-1]) {
+        translate([i*finger*2, -overage/2, 0]) //move the cuts slightly in y plane for complete cuts
+        if (type == "curved") {
+          curved_finger([finger, material+overage]);
+        } else {
+          square([finger, material+overage]); //add a small amount to ensure complete cuts
+        }
       }
+    } else {
+      echo("Error: finger size must be < 1/3 of length");
     }
   }
-
 } //end inside_cuts
 
 
@@ -146,14 +155,15 @@ module curved_finger(size, quality=24) {
 
 
 /*
-##module: intside_cuts_debug
-Create a set of finger-joint cuts all of the same size
-  ###parameters:
-    *length*      (real)           length of edge
-    *finger*      (real)           length of each individual finger
-    *material*    (real)           thickness of material - sets cut depth
-    *center*      (boolean)        center the set of fingers with respect to origin
-    *font*        (string)         name of font
+##module: inside_cuts_debug
+**Create a set of finger-joint cuts all of the same size**
+***parameters:***
+
+    length    (real)         length of edge
+    finger    (real)         length of each individual finger
+    material  (real)         thickness of material - sets cut depth
+    center    (boolean)      center the set of fingers with respect to origin
+    font      (string)       name of font
 */
 
 
@@ -175,14 +185,15 @@ module inside_cuts_debug(length=6, finger=1, material=1, center=false, font="Lib
 
 /*
 ##module: outside_cuts_debug
-Create a set of finger-joint cuts that result in two larger cuts taken at the i
-inside edge with debugging text
-  ###parameters:
-    *length*      (real)           length of edge
-    *finger*      (real)           length of each individual finger
-    *material*    (real)           thickness of material - sets cut depth
-    *center*      (boolean)        center the set of fingers with respect to origin
-    *font*        (string)         name of font
+**Create a set of finger-joint cuts that result in two larger cuts taken at the i
+inside edge with debugging text**
+***parameters:***
+
+    length    (real)         length of edge
+    finger    (real)         length of each individual finger
+    material  (real)         thickness of material - sets cut depth
+    center    (boolean)      center the set of fingers with respect to origin
+    font      (string)       name of font
 */
 
 module outside_cuts_debug(length=6, finger=1, material=1, center=false, font="Liberation Sans") {
@@ -197,8 +208,4 @@ module outside_cuts_debug(length=6, finger=1, material=1, center=false, font="Li
   translate([x_translation, y_translation,  0])
   text(text=debugText, size = length*.1, halign = "center", font = font);
 
-
 } // end outside debug
-
-
-//!curved_finger(size=[5, 2]);
