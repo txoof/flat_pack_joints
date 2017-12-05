@@ -18,4 +18,4 @@ module finger_testing(size, finger, material) {
 }
 
 
-finger_testing([102, 40, 50], 37, 10);
+finger_testing([102, 40, 50], 10, 10);
