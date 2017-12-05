@@ -237,6 +237,9 @@ module t_slot(diameter=false, length, material, help=false, tolerance=0.25,
       nut();
     translate([0, -diameter/2, 0])
       square([length-material, diameter]);
+
+
+
   }
 
   // draw a silouette fo a nut (across the flats) with nodes to prevent cracking
@@ -248,7 +251,7 @@ module t_slot(diameter=false, length, material, help=false, tolerance=0.25,
       if (node > 0) {
         for (i = [-1, 1]) {
           translate([-nut_thickness/2, nut_flats/2*i])
-            circle(r=node/2);
+            circle(r=nut_thickness*node);
         }
       }
     }

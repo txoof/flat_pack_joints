@@ -41,4 +41,4 @@ module curved_test(dim=[100, 50, 45]) {
 }
 
 //curved_test();
-t_slot(help=true, diameter=3, length=15, material=3, node=0.7);
+t_slot(help=true, diameter=3, length=30, material=3, node=0.25);
