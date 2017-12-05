@@ -242,8 +242,8 @@ module t_slot(diameter=false, length, material, help=false, tolerance=0.25,
 
   }
 
-  // draw a silouette fo a nut (across the flats) with nodes to prevent cracking
-  // in polycarbonate
+  // draw a silouette for a nut (across the flats) with nodes to prevent
+  // cracking in polycarbonate and similar brittle materials
   module nut() {
     $fn = 36;
     union() {
