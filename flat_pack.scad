@@ -160,7 +160,4 @@ module outside_cuts_debug(length=6, finger=1, material=1, center=false, font="Li
   translate([x_translation, y_translation,  0])
   text(text=debugText, size = length*.1, halign = "center", font = font);
 
-
 } // end outside debug
-
-
