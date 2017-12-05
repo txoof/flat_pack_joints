@@ -38,7 +38,6 @@ module outside_cuts(length=6, finger=1, material=1, center=false,
   x_translation = center==false ? 0 : -(num_cuts*2+1)*finger/2-end_cut_length;
   y_translation = center==false ? 0 : -material/2;
 
-
   translate([x_translation, y_translation]) {
 
     // make both endcuts here
@@ -84,8 +83,9 @@ module outside_cuts(length=6, finger=1, material=1, center=false,
     type      (string)       "square" or "curved"
 */
 
-module inside_cuts(length=6, finger=1, material=1, center=false, 
+module inside_cuts(length=6, finger=1, material=1, center=false,
                   type="square") {
+
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
@@ -156,8 +156,8 @@ module curved_finger(size, quality=24) {
     }
   }
 
-}
 
+} //end inside_cuts
 
 /*
 ##module: inside_cuts_debug
