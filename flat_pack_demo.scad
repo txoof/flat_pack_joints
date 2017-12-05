@@ -1,21 +1,21 @@
 use <./flat_pack.scad>
 
-module finger_testing() {
+module finger_testing(size, finger, material) {
   difference() {
     color("blue")
-      square([110, 40]);
-      outside_cuts(length=110, finger=5, material=10, center=false);
+      square([size[0], size[1]]);
+      outside_cuts(length=size[0], finger=finger, material=material, center=false);
   }
 
   rotate([180, 0, 0])
   translate([0, 0])
   difference() {
     color("red")
-      square([110, 50]);
+      square([size[0], size[2]]);
       translate([0, 0])
-      inside_cuts(length=110, finger=5, material=10, center=false);
+      inside_cuts(length=size[0], finger=finger, material=material, center=false);
   }
 }
 
 
-finger_testing();
+finger_testing([102, 40, 50], 37, 10);
