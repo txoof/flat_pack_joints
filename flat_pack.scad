@@ -92,7 +92,7 @@ module inside_cuts(length=6, finger=1, material=1, center=false) {
   y_translation = center==false ? 0 : -material/2;
 
   translate([x_translation, y_translation]) {
-    if( num_cuts > -1) {
+    if( num_cuts > 0) {
       for (i = [0 : num_cuts-1]) {
         translate([i*finger*2, -overage/2, 0]) //move the cuts slightly in y plane for complete cuts
           square([finger, material+overage]); //add a small amount to ensure complete cuts
