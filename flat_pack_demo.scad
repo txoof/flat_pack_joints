@@ -8,11 +8,9 @@ module finger_testing(size, finger, material) {
   }
 
   rotate([180, 0, 0])
-  translate([0, 0])
   difference() {
     color("red")
       square([size[0], size[2]]);
-      translate([0, 0])
       inside_cuts(length=size[0], finger=finger, material=material, center=false);
   }
 }
