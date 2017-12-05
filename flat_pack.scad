@@ -51,6 +51,8 @@ module outside_cuts(length=6, finger=1, material=1, center=false) {
           square([finger, material+overage]);
 
       }
+    } else {
+      echo("Error: finger size must be < 1/3 of length");
     }
   }
 
@@ -96,7 +98,9 @@ module inside_cuts(length=6, finger=1, material=1, center=false) {
       for (i = [0 : num_cuts-1]) {
         translate([i*finger*2, -overage/2, 0]) //move the cuts slightly in y plane for complete cuts
           square([finger, material+overage]); //add a small amount to ensure complete cuts
-      }
+       }
+    } else {
+      echo("Error: finger size must be < 1/3 of length");
     }
   }
 
