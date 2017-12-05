@@ -4,7 +4,8 @@
 ##module: outside_cuts
 **Create a set of finger-joint cuts that result in two larger cuts taken at the outside edge**
 
-###parameters:
+***parameters:***
+
     length    (real)         length of edge
     finger    (real)         length of each individual finger
     material  (real)         thickness of material - sets cut depth
@@ -58,7 +59,8 @@ module outside_cuts(length=6, finger=1, material=1, center=false) {
 ##module: inside_cuts
 **Create a set of finger-joint cuts all of the same size**
 
-###parameters:
+***parameters:***
+
     length    (real)         length of edge
     finger    (real)         length of each individual finger
     material  (real)         thickness of material - sets cut depth
@@ -98,7 +100,8 @@ module inside_cuts(length=6, finger=1, material=1, center=false) {
 /*
 ##module: inside_cuts_debug
 **Create a set of finger-joint cuts all of the same size**
-###parameters:
+***parameters:***
+
     length    (real)         length of edge
     finger    (real)         length of each individual finger
     material  (real)         thickness of material - sets cut depth
@@ -127,7 +130,8 @@ module inside_cuts_debug(length=6, finger=1, material=1, center=false, font="Lib
 ##module: outside_cuts_debug
 **Create a set of finger-joint cuts that result in two larger cuts taken at the i
 inside edge with debugging text**
-###parameters:
+***parameters:***
+
     length    (real)         length of edge
     finger    (real)         length of each individual finger
     material  (real)         thickness of material - sets cut depth
