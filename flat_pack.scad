@@ -19,7 +19,7 @@ module outside_cuts(length=6, finger=1, material=1, center=false) {
   //maximum possible divisions for this length
   max_divisions = floor(length/finger);
   //number of usable divisions that fall completely within the edge
-  //for this implentation the number of divisions must be odd
+  //for this implementation the number of divisions must be odd
   usable_divisions = max_divisions%2==0 ? max_divisions-3 : max_divisions-2;
 
   // number of "female cuts"
@@ -96,7 +96,7 @@ module inside_cuts(length=6, finger=1, material=1, center=false) {
 } //end inside_cuts
 
 /*
-##module: intside_cuts_debug
+##module: inside_cuts_debug
 Create a set of finger-joint cuts all of the same size
   ###parameters:
     *length*      (real)           length of edge
