@@ -52,7 +52,7 @@ module outside_cuts(length=6, finger=1, material=1, center=false) {
 
       }
     } else {
-      echo("Error: finger size must be < 1/3 of length");
+      echo("Error: finger size must be <= 1/3 of length");
     }
   }
 
@@ -100,7 +100,7 @@ module inside_cuts(length=6, finger=1, material=1, center=false) {
           square([finger, material+overage]); //add a small amount to ensure complete cuts
        }
     } else {
-      echo("Error: finger size must be < 1/3 of length");
+      echo("Error: finger size must be <= 1/3 of length");
     }
   }
 
