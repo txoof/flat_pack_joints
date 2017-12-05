@@ -290,5 +290,4 @@ module t_slot(diameter=false, length, material, help=false, tolerance=0.25,
 
 } // end t_slot
 
-t_slot(help=true, diameter=3, length=10, material=3, node=0.7);
-//!curved_finger(size=[5, 2]);
+
