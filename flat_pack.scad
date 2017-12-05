@@ -10,9 +10,12 @@
     finger    (real)         length of each individual finger
     material  (real)         thickness of material - sets cut depth
     center    (boolean)      center the set of fingers with respect to origin
+    type      (string)       "square" or "curved"
+
 */
 
-module outside_cuts(length=6, finger=1, material=1, center=false) {
+module outside_cuts(length=6, finger=1, material=1, center=false,
+                    type="square") {
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
@@ -78,9 +81,11 @@ module outside_cuts(length=6, finger=1, material=1, center=false) {
     finger    (real)         length of each individual finger
     material  (real)         thickness of material - sets cut depth
     center    (boolean)      center the set of fingers with respect to origin
+    type      (string)       "square" or "curved"
 */
 
-module inside_cuts(length=6, finger=1, material=1, center=false) {
+module inside_cuts(length=6, finger=1, material=1, center=false, 
+                  type="square") {
   // overage to ensure that all cuts are completed
   overage = 0.0001;
 
