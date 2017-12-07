@@ -30,28 +30,27 @@ module box_3d(box_inner, thickness, fingers) {
 
 // lasercut layout
 module layout_2d(inner, thickness, margin=2) {
-  spacingA = inner[0] + thickness * 2 + margin;
-  spacingB = inner[1] + thickness * 2 + margin;
+  spacing_horizontal = inner[0] + thickness * 2 + margin;
+  spacing_both = thickness * 2 + margin;
 
-  // bottom
-  children(0);
   // top
-  translate([spacingA, 0, 0])
+  children(0);
+  // bottom
+  translate([spacing_horizontal, 0, 0])
     children(1);
-  // right
-  translate([spacingA * 2, inner[1], 0])
+  // left
+  translate([spacing_horizontal * 2, inner[1], 0])
     rotate([0, 0, -90])
       children(2);
   // left
-  translate([spacingA * 2 + inner[2] + thickness * 2 + margin, inner[1], 0])
+  translate([spacing_horizontal * 2 + inner[2] + spacing_both, inner[1], 0])
     rotate([0, 0, -90])
       children(3);
   // front
-  translate([0, inner[1] + margin + thickness * 2, 0])
+  translate([0, inner[1] + spacing_both, 0])
     children(4);
   // back
-  translate([inner[0] + margin + thickness * 2,
-             inner[1] + margin + thickness * 2, 0])
+  translate([inner[0] + spacing_both, inner[1] + spacing_both, 0])
     children(5);
 }
 
