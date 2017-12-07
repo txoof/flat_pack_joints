@@ -5,26 +5,26 @@ include <flat_pack.scad>;
  *
  * Inspired by http://boxdesigner.connectionlab.org/
  */
-module box_2d(box_inner, thickness, tabs, margin=2) {
+module box_2d(box_inner, thickness, fingers, margin=2) {
   layout_2d(box_inner, thickness) {
-    side_a_top(box_inner, thickness, tabs);
-    side_a(box_inner, thickness, tabs);
-    side_b(box_inner, thickness, tabs);
-    side_b(box_inner, thickness, tabs);
-    side_c(box_inner, thickness, tabs);
-    side_c(box_inner, thickness, tabs);
+    side_xy_top(box_inner, thickness, fingers);
+    side_xy(box_inner, thickness, fingers);
+    side_yz(box_inner, thickness, fingers);
+    side_yz(box_inner, thickness, fingers);
+    side_xz(box_inner, thickness, fingers);
+    side_xz(box_inner, thickness, fingers);
   }
 }
 
 // An assembled version of the box for previewing.
-module box_3d(box_inner, thickness, tabs) {
+module box_3d(box_inner, thickness, fingers) {
   layout_3d(box_inner, thickness) {
-    side_a_top(box_inner, thickness, tabs);
-    side_a(box_inner, thickness, tabs);
-    side_b(box_inner, thickness, tabs);
-    side_b(box_inner, thickness, tabs);
-    side_c(box_inner, thickness, tabs);
-    side_c(box_inner, thickness, tabs);
+    side_xy_top(box_inner, thickness, fingers);
+    side_xy(box_inner, thickness, fingers);
+    side_yz(box_inner, thickness, fingers);
+    side_yz(box_inner, thickness, fingers);
+    side_xz(box_inner, thickness, fingers);
+    side_xz(box_inner, thickness, fingers);
   }
 }
 
@@ -99,37 +99,37 @@ module layout_3d(box_inner, thickness) {
   }
 }
 
-module side_a_top(inner, thickness, tabs) {
+module side_xy_top(inner, thickness, fingers) {
   side([inner[0], inner[1]],
        thickness,
-       [tabs[3], tabs[4], tabs[3], tabs[4]],
+       [fingers[3], fingers[4], fingers[3], fingers[4]],
        [0, 0, 0, 0]);
 }
 
-module side_a(inner, thickness, tabs) {
+module side_xy(inner, thickness, fingers) {
   side([inner[0], inner[1]],
        thickness,
-       [tabs[0], tabs[1], tabs[0], tabs[1]],
+       [fingers[0], fingers[1], fingers[0], fingers[1]],
        [0, 0, 0, 0]);
 }
 
 // left/right
-module side_b(inner, thickness, tabs) {
+module side_yz(inner, thickness, fingers) {
   side([inner[1], inner[2]],
        thickness,
-       [tabs[4], tabs[2], tabs[1], tabs[2]],
+       [fingers[4], fingers[2], fingers[1], fingers[2]],
        [1, 0, 1, 0]);
 }
 
 // front/back
-module side_c(inner, thickness, tabs) {
+module side_xz(inner, thickness, fingers) {
   side([inner[0], inner[2]],
        thickness,
-       [tabs[3], tabs[2], tabs[0], tabs[2]],
+       [fingers[3], fingers[2], fingers[0], fingers[2]],
        [1, 1, 1, 1]);
 }
 
-module side(inner, thickness, tabs, polarity) {
+module side(inner, thickness, fingers, polarity) {
   SMIDGE = 0.1;
   x = inner[0] + thickness * 2;
   y = inner[1] + thickness * 2;
@@ -139,26 +139,26 @@ module side(inner, thickness, tabs, polarity) {
       square([x, y]);
 
       // bottom
-      if (tabs[2] > 0)
+      if (fingers[2] > 0)
         translate([0, -SMIDGE, 0])
-          edge_cuts(x, tabs[2], thickness + SMIDGE, polarity[2]);
+          edge_cuts(x, fingers[2], thickness + SMIDGE, polarity[2]);
 
       // top
-      if (tabs[0] > 0)
+      if (fingers[0] > 0)
         translate([0, y - thickness, 0])
-          edge_cuts(x, tabs[0], thickness + SMIDGE, polarity[0]);
+          edge_cuts(x, fingers[0], thickness + SMIDGE, polarity[0]);
 
       rotate([0, 0, -90]) {
         translate([-y, 0, 0]) {
           // left
-          if (tabs[3] > 0)
+          if (fingers[3] > 0)
             translate([0, -SMIDGE, 0])
-              edge_cuts(y, tabs[3], thickness + SMIDGE, polarity[3]);
+              edge_cuts(y, fingers[3], thickness + SMIDGE, polarity[3]);
 
           // right
-          if (tabs[1] > 0)
+          if (fingers[1] > 0)
             translate([0, x - thickness, 0])
-              edge_cuts(y, tabs[1], thickness + SMIDGE, polarity[1]);
+              edge_cuts(y, fingers[1], thickness + SMIDGE, polarity[1]);
           }
         }
     }
